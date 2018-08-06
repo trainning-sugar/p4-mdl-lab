@@ -13,6 +13,9 @@
     "type": "git",
     "url": "git+https://github.com/trainning-sugar/p4-mdl-lab.git"
   },
+  "bin": {
+    "md-links": "cli.js"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
