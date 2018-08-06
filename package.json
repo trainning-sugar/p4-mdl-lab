@@ -22,5 +22,9 @@
   "bugs": {
     "url": "https://github.com/trainning-sugar/p4-mdl-lab/issues"
   },
-  "homepage": "https://github.com/trainning-sugar/p4-mdl-lab#readme"
+  "homepage": "https://github.com/trainning-sugar/p4-mdl-lab#readme",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "marked": "^0.4.0"
+  }
 }
