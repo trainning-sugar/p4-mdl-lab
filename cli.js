@@ -7,7 +7,11 @@ const mdLinks = require('./index');
 
 switch (true) {
   case args.length === 1:
-    mdLinks(`${args}`)
+    mdLinks(`${args}`).then(data => {
+      data.forEach(obj => {
+        console.log(`${obj.file}${obj.href}${obj.text}`)
+      });
+    })
     break;
   case ((args.length === 2 && args[1] === '--validate') || (args.length === 2 && args[1] === '--stats')):
     //   greeting(`Hola desde ${args}`)
@@ -16,5 +20,5 @@ switch (true) {
     // greeting(`Hola otra vez desde ${args}`)
     break;
   default:
-    throw new Error('Command not fiel')
+    throw new Error('Command not find the directory or file or put de command correct')
 }

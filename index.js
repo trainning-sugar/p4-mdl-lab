@@ -33,11 +33,17 @@ const getLinks = (acum, files) => {
 
 
 const mdLinks = (path, options) => {
-
   const mdFiles = [];
   const links = [];
+  return new Promise((resolve, reject) => {
+    resolve(getLinks(links, makeArrwithMarkdownFiles(mdFiles, path)))
+  })
+  /*   return new Promise((resolve, reject) => {
+      
+      resolve(getLinks(links, makeArrwithMarkdownFiles(mdFiles, path)))
+    }) */
 
-  console.log(getLinks(links, makeArrwithMarkdownFiles(mdFiles, path)));
+  //  console.log(getLinks(links, makeArrwithMarkdownFiles(mdFiles, path)));
 
 }
 
