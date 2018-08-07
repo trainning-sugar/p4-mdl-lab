@@ -3,53 +3,43 @@ const Path = require('path');
 const marked = require('marked');
 const axios = require('axios');
 
+const makeArrwithMarkdownFiles = (acum, path) => {
+  const stats = fs.lstatSync(path);
+  stats.isFile() ? acum.push(path) : fs.readdirSync(path).map(file => makeArrwithMarkdownFiles(acum, Path.join(path, file)));
+  return acum.filter(file => Path.extname(file) === '.md');
+};
 
-const state = {
-  files: [],
-  markdowFiles: null,
-  links: null
+const getLinkstoFile = (acum, file) => {
+  marked(fs.readFileSync(file, {
+    encoding: "utf-8"
+  }).toString()).split('<').map((cur) => {
+    if (cur.startsWith('a')) {
+      acum.push({
+        href: cur.substr(7).substr(0, cur.substr(7).search('>')),
+        text: cur.substring(cur.search('>') + 1),
+        file: file,
+        line: 0
+      })
+    }
+  })
+  return acum
 }
 
-const filterMarkdowns = files => {
-  state.markdowFiles = files.filter(file => Path.extname(Path.join(process.cwd(), file)) === '.md');
-  console.log(state.markdowFiles);
-  return state.markdowFiles;
-  //console.log(markdowFiles);
-  //return markdowFiles
+
+const getLinks = (acum, files) => {
+  files.length === 1 ? getLinkstoFile(acum, files[0]) : files.map(file => getLinkstoFile(acum, file))
+  return acum;
 }
-
-
-
-
-
-const isFile = file => {
-  state.files.push(file)
-  return filterMarkdowns(state.files)
-}
-
-const readDirSync = path => {
-  if (fs.lstatSync(path).isFile()) {
-    return isFile(path)
-  } else {
-    fs.readdirSync(path).map(file => {
-      const ruta = Path.join(path, file);
-      return fs.lstatSync(ruta).isFile() ? isFile(ruta) : readDirSync(ruta)
-    })
-  }
-}
-
 
 
 const mdLinks = (path, options) => {
-  console.log(path);
-  readDirSync(path)
+
+  const mdFiles = [];
+  const links = [];
+
+  console.log(getLinks(links, makeArrwithMarkdownFiles(mdFiles, path)));
+
 }
 
-
-
-/* const greeting = str => {
-  console.log(str)
-}
- */
 
 module.exports = mdLinks;

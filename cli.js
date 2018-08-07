@@ -16,5 +16,5 @@ switch (true) {
     // greeting(`Hola otra vez desde ${args}`)
     break;
   default:
-    throw new Error('Indique bien los parametros')
+    throw new Error('Command not fiel')
 }
